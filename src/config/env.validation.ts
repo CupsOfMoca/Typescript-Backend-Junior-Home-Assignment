@@ -1,0 +1,30 @@
+import { IsString, validateSync } from 'class-validator';
+
+import { plainToInstance } from 'class-transformer';
+
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv extends EnvironmentVariables {}
+  }
+}
+export class EnvironmentVariables {
+  @IsString()
+  DATABASE_URL: string;
+}
+
+export function validate(
+  config: Record<string, unknown>,
+): EnvironmentVariables {
+  const validatedConfig = plainToInstance(EnvironmentVariables, config, {
+    enableImplicitConversion: true,
+  });
+  const errors = validateSync(validatedConfig, {
+    skipMissingProperties: false,
+  });
+
+  if (errors.length > 0) {
+    throw new Error(errors.toString());
+  }
+
+  return validatedConfig;
+}

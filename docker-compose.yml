@@ -1,0 +1,7 @@
+services:
+  mindtech_task_database:
+    image: mongo:6.0.8
+    environment:
+      - MONGODB_DATABASE="dev"
+    ports:
+      - 27100:27017
