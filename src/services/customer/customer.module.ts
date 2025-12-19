@@ -10,6 +10,7 @@ import {
   Customer,
   CustomerSchema,
 } from 'src/models/schema/customer/customer.schema';
+import { CustomerController } from 'src/controllers/customer/customer.controller';
 
 const mongooseImports = [
   MongooseModule.forFeature([
@@ -35,6 +36,7 @@ const mongooseImports = [
 @Module({
   imports: [...mongooseImports],
   providers: [CustomerService],
+  controllers:[CustomerController],
   exports: [CustomerService],
 })
 export class CustomerModule {}

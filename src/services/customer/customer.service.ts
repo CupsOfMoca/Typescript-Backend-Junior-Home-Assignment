@@ -53,14 +53,12 @@ export class CustomerService {
     restaurantId: string;
     items: Item[];
   }): Promise<Order> {
-    //I commented this part out because I have now implemented user registration and authentication.
-    /*
     const customer = await this.customerModel.findById(customerId);
-     if (!customer) {
+    if (!customer) {
       throw new NotFoundException('error.no_customer_found', {
         description: 'No customer found with the provided id',
       });
-    } */
+    }
     const restaurant = await this.restaurantModel.findById(restaurantId);
     if (!restaurant) {
       throw new NotFoundException('error.no_restaurant_found', {
@@ -68,11 +66,16 @@ export class CustomerService {
       });
     }
     const newOrder = new this.orderModel({
-      customer: customerId, //customer._id, //same reason as above
+      customer: customer._id,
       restaurant: restaurant._id,
       items,
       status: 'PENDING',
     });
     return await newOrder.save();
+  }
+
+  async addCustomer(): Promise<Customer> {
+    const newCustomer = new this.customerModel({ name: 'Test Customer', email: 'random@asdfghj.com' });
+    return newCustomer.save();
   }
 }
