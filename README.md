@@ -7,4 +7,4 @@ I provided a postman collection for testing the endpoints. (id's will most likel
 
 I did not have enough time to write unit tests, but from manual testing via postman, the endpoints seemed to work.
 
-I also didn't have enough time to full set Swagger up in the project, but I have left the changes on branch #4.
+I also didn't have enough time to be able to fully set Swagger up in the project, but I have left the changes I made regarding it on branch #4.
