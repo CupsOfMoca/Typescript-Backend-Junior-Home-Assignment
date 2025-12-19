@@ -1,6 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { OrderUpdateStatusDTO } from 'src/models/dtos/order/order_update_status.dto';
 import { OrderStatus } from 'src/models/enums/order_status.enum';
 import { Order } from 'src/models/schema/order/order.schema';
@@ -80,5 +80,29 @@ export class RestaurantService {
       });
     }
     return order;
+  }
+
+  async addRestaurant() {
+    const newRestaurant = new this.restaurantModel({
+      name: 'Test Restaurant',
+      address: '123 Test St, Test City, TS 12345',
+      phoneNumber: '123-456-7890',
+      menu: [
+        {
+          _id: new Types.ObjectId(),
+          name: 'testitem1',
+          description: 'This is a test 123',
+          price: 6,
+        },
+        {
+          _id: new Types.ObjectId(),
+          name: 'testitem2',
+          description: 'This is a test ABC',
+          price: 7,
+        },
+
+      ],
+    });
+    return await newRestaurant.save();
   }
 }

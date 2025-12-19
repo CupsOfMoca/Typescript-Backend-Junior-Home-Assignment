@@ -6,6 +6,7 @@ import {
   RestaurantSchema,
 } from 'src/models/schema/restaurant/restaurant.schema';
 import { Order, OrderSchema } from 'src/models/schema/order/order.schema';
+import { RestaurantController } from 'src/controllers/restaurant/restaurant.controller';
 
 const mongooseImports = [
   MongooseModule.forFeature([
@@ -25,6 +26,7 @@ const mongooseImports = [
 @Module({
   imports: [...mongooseImports],
   providers: [RestaurantService],
+  controllers: [RestaurantController],
   exports: [RestaurantService],
 })
 export class RestaurantModule {}

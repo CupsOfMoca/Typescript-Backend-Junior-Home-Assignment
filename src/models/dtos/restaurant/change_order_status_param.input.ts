@@ -8,5 +8,4 @@ export class ChangeOrderStatusParam {
   @IsMongoId()
   orderId: string;
 
-  orderStatus: OrderStatus;
 }
