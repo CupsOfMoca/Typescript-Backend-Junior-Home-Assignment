@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, model } from 'mongoose';
+import { HydratedDocument, model, Types } from 'mongoose';
 import { BaseEntity } from '../base_entity.schema';
 import { OrderStatus } from 'src/models/enums/order_status.enum';
 import { Item } from '../item/item.schema';
@@ -10,15 +10,12 @@ const collection = 'orders';
 
 @Schema({ collection, versionKey: false })
 export class Order extends BaseEntity {
-  @Prop({
-    required: true,
-  })
-  customerId: string;
+  
+  @Prop({ type: Types.ObjectId, ref: 'Restaurant', required: true })
+  restaurant: Types.ObjectId;
 
-  @Prop({
-    required: true,
-  })
-  restaurantId: string;
+  @Prop({ type: Types.ObjectId, ref: 'Customer', required: true })
+  customer: Types.ObjectId;
 
   @Prop({
     required: true,
@@ -32,4 +29,3 @@ export class Order extends BaseEntity {
 }
 export const OrderSchema = SchemaFactory.createForClass(Order);
 export const OrderModel = model(collection, OrderSchema);
-

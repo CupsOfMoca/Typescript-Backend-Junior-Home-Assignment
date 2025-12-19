@@ -1,6 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { OrderStatus } from 'src/models/enums/order_status.enum';
 import { Customer } from 'src/models/schema/customer/customer.schema';
 import { Item } from 'src/models/schema/item/item.schema';
 import { Order } from 'src/models/schema/order/order.schema';
@@ -69,13 +70,16 @@ export class CustomerService {
       customer: customer._id,
       restaurant: restaurant._id,
       items,
-      status: 'PENDING',
+      status: OrderStatus.RECEIVED,
     });
     return await newOrder.save();
   }
 
   async addCustomer(): Promise<Customer> {
-    const newCustomer = new this.customerModel({ name: 'Test Customer', email: 'random@asdfghj.com' });
+    const newCustomer = new this.customerModel({
+      name: 'Test Customer',
+      email: 'random@asdfghj.com',
+    });
     return newCustomer.save();
   }
 }

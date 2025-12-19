@@ -1,8 +1,9 @@
-import { Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { OrderParamInput } from 'src/models/dtos/order/order_param.input';
 import { OrderUpdateStatusDTO } from 'src/models/dtos/order/order_update_status.dto';
 import { ChangeOrderStatusParam } from 'src/models/dtos/restaurant/change_order_status_param.input';
 import { ResaurantParamInput } from 'src/models/dtos/restaurant/restaurant_param.input';
+import { OrderStatus } from 'src/models/enums/order_status.enum';
 import { RestaurantService } from 'src/services/restaurant/restaurant.service';
 
 @Controller('restaurant')
@@ -18,8 +19,13 @@ export class RestaurantController {
   @Patch(':restaurantId/order/:orderId')
   async changeOrderStatus(
     @Param() params: ChangeOrderStatusParam,
+    @Body() body: { orderStatus: OrderStatus },
   ): Promise<OrderUpdateStatusDTO> {
-    return await this.restaurantService.changeOrderStatus(params);
+    return await this.restaurantService.changeOrderStatus({
+      restaurantId: params.restaurantId,
+      orderId: params.orderId,
+      orderStatus: body.orderStatus,
+    });
   }
 
   @Get(':restaurantId/order/:orderId')
@@ -28,7 +34,7 @@ export class RestaurantController {
   }
 
   @Post('add')
-    async addRestaurant() {
-        return await this.restaurantService.addRestaurant();
-    }
+  async addRestaurant() {
+    return await this.restaurantService.addRestaurant();
+  }
 }
